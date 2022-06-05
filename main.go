@@ -1,37 +1,63 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
+	"context"
+	"go-microservice/handlers"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
 )
 
 func main() {
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Hello from HandelFunc")
+	logger := log.New(os.Stdout, "go-mcrsvc", log.LstdFlags)
 
-		d, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte("error occured"))
+	// prepare handler
+	helloHandler := handlers.NewHello(logger)
+	goodbyeHandler := handlers.NewGoodbye(logger)
 
-			return
+	// using DefultServeMux
+	// http.HandleFunc("/", helloHandler.ServeHTTP)
+
+	// create servemux
+	sm := http.NewServeMux()
+	sm.Handle("/", helloHandler)
+	sm.Handle("/goodbye", goodbyeHandler)
+
+	// create server
+	s := &http.Server{
+		Addr:        ":9090",
+		Handler:     sm,
+		IdleTimeout: 120 * time.Second,
+		ReadTimeout: 1 * time.Second,
+	}
+
+	// start server
+	go func() {
+		err := s.ListenAndServe()
+		if err != nil && err != http.ErrServerClosed {
+			logger.Fatal(err)
 		}
+	}()
 
-		fmt.Fprintf(w, "hello %s\n", d)
-	})
+	// trap sigterm or interupt and gracefully shutdown the server
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 
-	http.HandleFunc("/goodbye", func(http.ResponseWriter, *http.Request) {
-		log.Println("Goodbye")
-	})
+	sig := <-sigChan
+	logger.Println("Got signal:", sig)
 
-	http.HandleFunc("/error", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Error")
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer func() {
+		cancel()
+	}()
 
-		http.Error(w, "this is error endpoint", http.StatusBadRequest)
-	})
+	if err := s.Shutdown(ctx); err != nil {
+		logger.Fatal(err)
+	}
 
-	http.ListenAndServe(":9090", nil)
+	logger.Println("Server gracefully stopped")
 }
