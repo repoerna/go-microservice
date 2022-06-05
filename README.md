@@ -15,12 +15,15 @@ https://github.com/nicholasjackson/building-microservices-youtube
 ---
 - Refactoring
 - move HandleFunc to independent object
-    - Create your own servemux / handler
-    - Create your ouwn http server
-        - Setup timeout
-    - handling gracefull shutdown  
+- Create your own servemux / handler
+- Create your ouwn http server
+    - Setup timeout
+- handling gracefull shutdown  
 ---
 - What is REST
+- creating data model
+- create handler to access data
+- manage handler to read http method 
 
 ## Material
 - HTTP Server Diagram
