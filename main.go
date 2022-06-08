@@ -16,18 +16,11 @@ func main() {
 	logger := log.New(os.Stdout, "go-mcrsvc", log.LstdFlags)
 
 	// prepare handler
-	helloHandler := handlers.NewHello(logger)
-	goodbyeHandler := handlers.NewGoodbye(logger)
-
 	productHandler := handlers.NewProduct(logger)
-	// using DefultServeMux
-	// http.HandleFunc("/", helloHandler.ServeHTTP)
 
 	// create servemux
 	sm := http.NewServeMux()
-	sm.Handle("/", helloHandler)
-	sm.Handle("/goodbye", goodbyeHandler)
-	sm.Handle("/products", productHandler)
+	sm.Handle("/", productHandler)
 
 	// create server
 	s := &http.Server{
