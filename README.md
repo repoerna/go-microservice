@@ -24,6 +24,14 @@ https://github.com/nicholasjackson/building-microservices-youtube
 - creating data model
 - create handler to access data
 - manage handler to read http method 
+----
+- Handling POST and PUT requests
+- De-serializing data with encoding/json
+---
+- Refactoring the standard library to use the [Gorilla framework](https://www.gorillatoolkit.org/pkg/mux)
+- Creating middleware
+
+
 
 ## Material
 - HTTP Server Diagram
@@ -35,8 +43,17 @@ https://stackoverflow.com/questions/40478027/what-is-an-http-request-multiplexer
 - graceful shutdown
 https://medium.com/honestbee-tw-engineer/gracefully-shutdown-in-go-http-server-5f5e6b83da5a
 
+- Defensive Programming
+https://en.wikipedia.org/wiki/Defensive_programming
+
 - RESTful best practice
 https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design
 
 - JSON Marshal vs JSON Encoding
 https://stackoverflow.com/questions/33061117/in-golang-what-is-the-difference-between-json-encoding-and-marshalling
+
+- Go REST API using standart library
+https://golang.cafe/blog/golang-rest-api-example.html
+
+- Middleware
+https://www.ictshore.com/software-design/what-is-middleware-software/
