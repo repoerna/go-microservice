@@ -30,7 +30,9 @@ https://github.com/nicholasjackson/building-microservices-youtube
 ---
 - Refactoring the standard library to use the [Gorilla framework](https://www.gorillatoolkit.org/pkg/mux)
 - Creating middleware
-
+---
+- go validator
+- custom validation type
 
 
 ## Material
@@ -57,3 +59,6 @@ https://golang.cafe/blog/golang-rest-api-example.html
 
 - Middleware
 https://www.ictshore.com/software-design/what-is-middleware-software/
+
+- OWASP Top 10 
+https://owasp.org/www-project-top-ten/
