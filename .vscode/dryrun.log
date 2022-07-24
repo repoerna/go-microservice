@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/purnanugraha/workspaces/learn/go-microservice'
+which swagger || GO111MODULE=off go get -u github.com/go-swagger/go-swagger/cmd/swagger
+make: Leaving directory '/home/purnanugraha/workspaces/learn/go-microservice'
+ 
